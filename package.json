@@ -1,0 +1,46 @@
+{
+  "name": "vuelibs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "run-front": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "run-back": "nodemon --exec babel-node --presets env,stage-2 server/index.js"
+  },
+  "dependencies": {
+    "@octokit/rest": "^16.1.0",
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "debounce": "^1.2.0",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "logdna": "^3.0.1",
+    "markdown": "^0.5.0",
+    "mongo-sanitize": "^1.0.1",
+    "mongoose": "^5.3.15",
+    "node-sass": "^4.10.0",
+    "sass": "^1.15.2",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.5.17",
+    "vue-moment": "^4.0.0",
+    "vue-nprogress": "^0.1.5",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.2.0",
+    "@vue/cli-service": "^3.2.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0-0",
+    "vue-template-compiler": "^2.5.17",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.18.7"
+  }
+}
