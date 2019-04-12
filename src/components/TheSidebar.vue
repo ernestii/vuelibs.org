@@ -5,6 +5,9 @@
         Vuelibs
       </router-link>
     </h1>
+
+    <a class="github-button" href="https://github.com/ernestii/vuelibs.org" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ernestii/vuelibs.org on GitHub">Star</a>
+
     <p class="sidebar__headline">
       A list of Vue.js libraries and components based on the <a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a> repo.
     </p>
