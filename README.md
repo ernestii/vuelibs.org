@@ -3,6 +3,7 @@
 ### Prerequisites:
 * nodejs
 * forever
+* yarn
 * set up nginx proxy on port 3001
 
 ## Install:
@@ -10,6 +11,7 @@
 ```
 git clone ...
 cd vuelibs.org
+yarn install
 ```
 
 ## Deploy Webapp
