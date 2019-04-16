@@ -5,34 +5,42 @@
 * forever
 * set up nginx proxy on port 3001
 
-### Install & deploy:
-
+## Install:
 
 ```
 git clone ...
-# Copy example.deploy.sh as deploy.sh and replace api keys and mongo url.
 cd vuelibs.org
+```
+
+## Deploy Webapp
+
+```
+# Copy example.deploy.sh as deploy.sh and replace api keys and mongo url.
+chmod +x deploy.sh
 ./deploy.sh
 ```
 
-## Run parser
 
-Debug:
+#### Parser
+
 ```
-babel-node --inspect=1234 server/parser.js
+# Copy example.parser.sh as parser.sh and replace api keys and mongo url.
+chmod +x parser.sh
+
+# Dev
+ENV=dev ./parser.sh
+
+# Prod
+ENV=prod ./parser.sh
 ```
 
-Prod (will use logdna logger):
-```
-ENV=prod ./node_modules/.bin/babel-node server/parser.js 
-```
 
 ## CRON
 
 Run parser everyday at 5:23
 ```
 EDITOR=nano crontab -e
-23 5 * * * ENV=prod LOGDNA_KEY=NNNN MONGODB_URL=NNNN OCTOKIT_KEY=NNNN PATH_TO_REPO/node_modules/.bin/babel-node PATH_TO_REPO/server/parser.js
+23 5 * * * ENV=prod CD PATH_TO_REPO/ && ./parser.sh
 ```
 
 # Tech stack

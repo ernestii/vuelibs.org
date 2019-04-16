@@ -7,10 +7,10 @@ npm run build
 
 forever stop "org.vuelibs"
 
+ENV=prod \
 PORT=3001 \
 LOGDNA_KEY=xxxxxxxxxx \
 MONGODB_URL=mongodb://xxxxxxxxxx \
-OCTOKIT_KEY=xxxxxxxxxx \
     forever start \
         --killSignal=SIGKILL\
         --uid "org.vuelibs"\

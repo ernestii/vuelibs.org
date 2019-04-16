@@ -18,18 +18,22 @@ if (process.env.ENV === 'prod' && process.env.LOGDNA_KEY) {
 }
 
 if (!process.env.MONGODB_URL) {
-    console.log('MONGODB_URL env variable was not found.');
+    logger.log('MONGODB_URL is not defined.');
+    process.exit(1);
+}
+if (!process.env.OCTOKIT_KEY) {
+    logger.log('OCTOKIT_KEY is not defined.');
     process.exit(1);
 }
 
-(async() => {
+async function connectMongo() {
     try {
         await Mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true });
         logger.log('Connected to mongo');
     } catch (err) {
-        logger.error('Could not connect to mongo');
+        logger.log('Could not connect to mongo');
     }
-})();
+}
 
 async function parseGithubFile() {
     const { data } = await axios.get(AV_URL);
@@ -96,12 +100,24 @@ async function parseGithubFile() {
 }
 
 const octokit = new Octokit({
-    auth: 'token ' + process.env.OCTOKIT_KEY
-});
+let octokit;
+async function connectGithub() {
+    octokit = new Octokit({
+        auth: process.env.OCTOKIT_KEY
+    });
+
+    const { data } = await octokit.rateLimit.get();
+    logger.log(`GitHub rate limits: ${data.rate.remaining}/${data.rate.limit}. ` + JSON.stringify(data.rate));
+
+    if (data.rate.remaining <= 1000) {
+        logger.log('WARN: GitHub remaining API calls is less than 1000. Exiting.');
+        process.exit();
+    }
+}
 
 async function getGithubStats(repourl) {
     if (!repourl) {
-        logger.error('getGithubStats: no repourl present');
+        logger.log('getGithubStats: no repourl present');
         return;
     }
 
@@ -194,7 +210,7 @@ async function update() {
                     if (!err) {
                         logger.log(`└ Finished adding ${i.name}.`);
                     } else {
-                        logger.error('└ Unable to ${i.name} save to mongo.');
+                        logger.log('└ Unable to ${i.name} save to mongo.');
                     }
                     next();
                 }
@@ -204,6 +220,8 @@ async function update() {
 }
 
 (async() => {
+    await connectMongo();
+    await connectGithub();
     logger.log('Starting'+ new Date());
     await update();
     logger.log('Finished' + new Date());
