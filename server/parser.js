@@ -5,7 +5,7 @@ import { markdown } from "markdown";
 import Octokit from "@octokit/rest";
 import Logger from 'logdna';
 
-const DELAY = 1000;
+const DELAY = 2000;
 
 const AV_URL = "https://raw.githubusercontent.com/vuejs/awesome-vue/master/README.md";
 
@@ -99,12 +99,17 @@ async function parseGithubFile() {
     return rawd;
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 let octokit;
 async function connectGithub() {
+    console.log('Connecting to GitHub with token ' + process.env.OCTOKIT_KEY);
     octokit = new Octokit({
-        auth: process.env.OCTOKIT_KEY
+        auth: 'token ' + process.env.OCTOKIT_KEY
     });
-
+    await sleep(DELAY);
     const { data } = await octokit.rateLimit.get();
     logger.log(`GitHub rate limits: ${data.rate.remaining}/${data.rate.limit}. ` + JSON.stringify(data.rate));
 
