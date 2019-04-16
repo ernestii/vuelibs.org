@@ -99,7 +99,6 @@ async function parseGithubFile() {
     return rawd;
 }
 
-const octokit = new Octokit({
 let octokit;
 async function connectGithub() {
     octokit = new Octokit({
