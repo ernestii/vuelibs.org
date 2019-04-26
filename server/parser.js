@@ -160,14 +160,13 @@ async function getReadme(repourl) {
     const GH_URL = 'https://github.com/';
     const GH_CONTENT = 'https://raw.githubusercontent.com/';
 
-    let response;
+    let response = {};
     try {
-        const response = await axios.get(repourl.replace(GH_URL, GH_CONTENT) + '/master/README.md');
+        response = await axios.get(repourl.replace(GH_URL, GH_CONTENT) + '/master/README.md');
     } catch (e) {
         console.log('Unable to get readme for ' + repourl, e);
     }
-
-    return response;
+    return response.data;
 }
 
 async function update() {
