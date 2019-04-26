@@ -156,6 +156,20 @@ async function getGithubStats(repourl) {
     }
 }
 
+async function getReadme(repourl) {
+    const GH_URL = 'https://github.com/';
+    const GH_CONTENT = 'https://raw.githubusercontent.com/';
+
+    let response;
+    try {
+        const response = await axios.get(repourl.replace(GH_URL, GH_CONTENT) + '/master/README.md');
+    } catch (e) {
+        console.log('Unable to get readme for ' + repourl, e);
+    }
+
+    return response;
+}
+
 async function update() {
     const comps = await parseGithubFile();
 
@@ -186,9 +200,12 @@ async function update() {
                 }
             };
 
+            let readme;
+
             try {
                 if (i.url.includes('github.com')) {
                     githubStats = await getGithubStats(i.url);
+                    readme = await getReadme(i.url);
                 } else {
                     logger.warn(`├ Github.com not found in the url: ${i.url}`);
                 }
@@ -207,6 +224,7 @@ async function update() {
                         , category: i.category
                         , subcategory: i.subcategory
                         , ...githubStats
+                        , readme
                     }
                 }
                 , { upsert: true, new: true, setDefaultsOnInsert: true }

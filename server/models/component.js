@@ -25,6 +25,7 @@ const ComponentSchema = new mongoose.Schema({
         , forks: { type: Number }
         , watchers: { type: Number }
     }
+    , readme: { type: String }
 });
 ComponentSchema.index({
     name: 'text'
