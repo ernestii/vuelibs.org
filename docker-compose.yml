@@ -1,0 +1,25 @@
+version: '3'
+services:
+    web:
+        build: .
+        ports:
+            - '8080:8080'
+        depends_on: 
+            - mongo
+        networks:
+            - vuelibs-net
+        environment:
+            - LOGDNA_KEY: PUT_LOGDNA_KEY
+            - OCTOKIT_KEY: PUT_OCTOKIT_KEY
+            - ENV: prod
+    mongo:
+        image: mongo
+        restart: unless-stopped
+        ports:
+            - '27017:27017'
+        networks:
+            - vuelibs-net
+
+networks:
+    vuelibs-net:
+        driver: bridge
