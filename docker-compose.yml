@@ -11,6 +11,7 @@ services:
         environment:
             - LOGDNA_KEY: PUT_LOGDNA_KEY
             - OCTOKIT_KEY: PUT_OCTOKIT_KEY
+            - ENV: prod
     mongo:
         image: mongo
         restart: unless-stopped
