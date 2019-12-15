@@ -4,6 +4,7 @@ deploy.sh
 parser.sh
 /dist
 yarn.lock
+package-lock.json
 
 # local env files
 .env.local

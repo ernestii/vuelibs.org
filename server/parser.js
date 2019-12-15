@@ -17,10 +17,6 @@ if (process.env.ENV === 'prod' && process.env.LOGDNA_KEY) {
     });
 }
 
-if (!process.env.MONGODB_URL) {
-    logger.log('MONGODB_URL is not defined.');
-    process.exit(1);
-}
 if (!process.env.OCTOKIT_KEY) {
     logger.log('OCTOKIT_KEY is not defined.');
     process.exit(1);
@@ -28,7 +24,7 @@ if (!process.env.OCTOKIT_KEY) {
 
 async function connectMongo() {
     try {
-        await Mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true });
+        await Mongoose.connect(process.env.MONGODB_URL || 'mongodb://mongo:27017/vuelibs');
         logger.log('Connected to mongo');
     } catch (err) {
         logger.log('Could not connect to mongo');
