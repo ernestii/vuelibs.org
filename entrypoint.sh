@@ -1,9 +1,8 @@
 #!/bin/sh
 
 # set up cronjob
-crontab /app/config/cronjobs
+crontab /app/crontab
 crond
 
-tail -f /var/log/cron.log
-
-# node /app/test.js
+# run the app
+node /app/server/babelize.js
